@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+  background-color: red;
+  padding:0;
+  margin:0;
+  background: url(https://media.giphy.com/media/iThaM3NlpjH0Y/giphy.gif);
+}
