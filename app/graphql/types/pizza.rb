@@ -7,7 +7,7 @@ Types::Pizza = GraphQL::ObjectType.define do
   field :weight, !types.Int, 'The weight of pizza in grams'
   field :vegetarian, !types.Boolean, 'If the pizza is vegetarian'
   field :can_be_delivered, !types.Boolean, 'If a pizza can be delivered'
-  field :on_sale, !types.Boolean, 'If a pizza is on sale'
+  field :on_sale, !types.Boolean, 'If a pizza is on sale', deprecation_reason: 'We no longer have sales'
   field :healthy, !types.Boolean, 'If a pizza is healthy'
   field :calories, !types.Boolean, 'Calories in a pizza'
   # field :allergens, types.String, 'Allergens in a pizza'

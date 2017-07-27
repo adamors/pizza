@@ -5,18 +5,18 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :pizzas do
-        resources :reviews
-        resources :toppings
+      resources :pizzas, only: [:index, :show] do
+        resources :reviews, only: [:index, :show, :create]
+        resources :toppings, only: [:index, :show]
       end
-      resources :toppings
+      resources :toppings, only: [:index, :show]
     end
     namespace :v2 do
-      resources :pizzas do
-        resources :reviews
-        resources :toppings
+      resources :pizzas, only: [:index, :show] do
+        resources :reviews, only: [:index, :show]
+        resources :toppings, only: [:index, :show]
       end
-      resources :toppings
+      resources :toppings, only: [:index, :show]
     end
   end
 
