@@ -1,0 +1,6 @@
+query {
+  pizzas {
+    id
+    name
+  }
+}
