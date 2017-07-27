@@ -12,26 +12,45 @@ Types::RootQuery = GraphQL::ObjectType.define do
     }
   end
 
+  field :toppings, !types[Types::Topping] do
+    description 'A list of all Toppings in the system'
+
+    resolve -> (object, arguments, context) {
+      scope = Topping.all
+    }
+  end
+
+  field :reviews, !types[Types::Review] do
+    description 'A list of all the Reviews in the system'
+
+    resolve -> (object, arguments, context) {
+      scope = Review.all
+    }
+  end
+
   field :pizzas, !types[Types::Pizza] do
     description 'A list of all Pizzas in the system.'
 
+    argument :vegetarian, types.Boolean, 'Vegetarian pizzas'
+    argument :toppingCount, types.Int, 'At least this many toppings'
+    argument :can_be_delivered, types.Boolean, 'If pizza can be delivered'
+    argument :on_sale, types.Boolean, 'If pizza is on sale'
+
     resolve -> (object, arguments, context) {
       scope = Pizza.all
-=begin
-      if arguments[:isClosed]
-        scope = scope.where(closed: arguments[:isClosed])
+
+      if arguments[:vegetarian]
+        scope = scope.where(vegetarian: arguments[:vegetarian])
       end
 
-      if arguments[:price]
-        scope = scope.where('restaurants.price <= ?', arguments[:price].length)
+      if arguments[:toppingCount]
+        scope = scope
+                .joins(:pizza_toppings)
+                .group(:pizza_id)
+                .having('count(pizza_toppings.topping_id) >= ?', arguments[:toppingCount])
       end
 
-      if arguments[:offersDelivery]
-        scope = scope.joins(:restaurant_info).where(restaurant_infos: { delivery: arguments[:offersDelivery] })
-      end
-
-      scope.page(arguments[:page]).per(arguments[:perPage])
-=end
+      scope
     }
   end
 end

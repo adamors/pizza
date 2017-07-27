@@ -1,0 +1,9 @@
+mutation {
+  AddReview(review: {title: "Bad Pizza", body: "just bad", pizzaID: 5}) {
+    title
+    body
+    pizza {
+      name
+    }
+  }
+}

@@ -4,3 +4,10 @@ query {
     name
   }
 }
+
+query {
+  pizzas {
+    id
+    reviews
+  }
+}

@@ -2,9 +2,11 @@ class GraphqlController < ApplicationController
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]
-    context = {}
-    result = AdamsPizzaSchema.execute(query, variables: variables, context: context)
-
+    context = {
+      # Query context goes here, for example:
+      # current_user: current_user,
+    }
+    result = AdamsPizzaSchema.execute(query, variables: variables, context: context, max_depth: 3)
     render json: result
   end
 
